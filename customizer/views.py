@@ -105,6 +105,9 @@ def home(request):
 
             product_img[y:y+h, x:x+w] = roi
 
+        # Ensure outputs folder exists
+        os.makedirs(os.path.join(settings.MEDIA_ROOT, 'outputs'), exist_ok=True)
+
         # --- Save output ---
         output_filename = f"output_{product}.png"
         output_path = os.path.join(settings.MEDIA_ROOT, 'outputs', output_filename)
