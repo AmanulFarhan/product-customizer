@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Customizer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #eef2f3, #dfe9f3);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input, select {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        .results {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            flex: 1;
+            text-align: center;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .download {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .download button {
+            background: #2196F3;
+        }
+
+        .download button:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚀 Product Customizer</h1>
+    <p style="text-align:center; color:gray;">
+        Upload your design and preview it on products in real-time
+    </p>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Upload Design:</label>
+        <input type="file" name="design">
+
+        <label>Select Product:</label>
+        <select name="product">
+            <option value="">-- Select Product --</option>
+            <option value="white_tshirt">White T-Shirt</option>
+            <option value="hoodie">Hoodie</option>
+            <option value="cap">Cap</option>
+        </select>
+
+        <button type="submit">Customize</button>
+    </form>
+
+    {% if output_image %}
+        <div class="results">
+            <div class="card">
+                <h3>Original</h3>
+                <img src="/media/products/{{ product }}.png">
+            </div>
+
+            <div class="card">
+                <h3>Customized</h3>
+                <img src="{{ output_image }}">
+            </div>
+        </div>
+
+        <div class="download">
+            <a href="{{ output_image }}" download>
+                <button>Download Result</button>
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+web: gunicorn customizer_project.wsgi
